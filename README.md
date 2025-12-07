@@ -2,4 +2,4 @@
 
 ⚠️Need root rights⚠️
 
-[HowUse](https://github.com/kotbendi/windows.h-on-linux/blob/main/HowUse.cpp) [HowCompile](https://github.com/kotbendi/windows.h-on-linux/blob/main/CompileGuide.sh)
+[HowUse](https://github.com/kotbendi/windows.h-on-linux/blob/main/HowUse.cpp) | [HowCompile](https://github.com/kotbendi/windows.h-on-linux/blob/main/CompileGuide.sh)
