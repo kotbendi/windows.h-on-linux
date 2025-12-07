@@ -2,4 +2,3 @@
 
 ⚠️Need root rights⚠️
 
-for compiling program use "g++ ProgramName -o FileName -Xl11"
