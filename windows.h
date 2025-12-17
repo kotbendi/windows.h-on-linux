@@ -1,4 +1,5 @@
 #pragma once
+
 #include <sys/ptrace.h>
 #include <sys/mman.h>
 #include <sys/types.h>
@@ -8,7 +9,11 @@
 #include <stdio.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
+#include <stdint.h>
+typedef void* LPVOID;
+typedef uint32_t DWORD;
+typedef unsigned char BYTE;
+typedef uint16_t WORD;
 typedef struct {
     pid_t pid;      
     int mem_fd;     
@@ -49,6 +54,7 @@ HANDLE OpenProcess(pid_t pid) {
 int MessageBoxA(const char* title, const char* message) {
     int screen;
     Display* display = XOpenDisplay(NULL);
+    
     Window window;
     if (display == NULL) {
         return 1;
@@ -63,8 +69,8 @@ int MessageBoxA(const char* title, const char* message) {
         BlackPixel(display, screen),
         WhitePixel(display, screen)
     );
-        XSelectInput(display, window, ExposureMask | KeyPressMask);
-
+    XSelectInput(display, window, ExposureMask | KeyPressMask);
+    XStoreName(display, window, title);
     XMapWindow(display, window);
 
     XEvent event;
@@ -72,13 +78,13 @@ int MessageBoxA(const char* title, const char* message) {
         XNextEvent(display, &event);
 
         if (event.type == Expose) {  
-            
+
             XDrawString(display, window,
                         DefaultGC(display, screen),
                         10, 20,
                         message, 14);
         }
-
+        
         if (event.type == KeyPress) {
             break;
         }
@@ -96,4 +102,21 @@ size_t WriteProcessMemory(HANDLE hProcess, void* addr, void* Buffer, size_t Size
         perror("pwrite");
     }
     return n;
+}
+int VirtualFree(void* mem, size_t size){
+    return munmap(mem, size);
+}
+void *VirtualAlloc(size_t size){
+
+    return mmap(NULL, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, 0, 0);
+}
+int CloseHandle(HANDLE hProcess){
+    if (hProcess.mem_fd != -1) {
+        close(hProcess.mem_fd);
+    }
+    if (ptrace(PTRACE_DETACH, hProcess.pid, NULL, NULL) == -1) {
+        perror("ptrace detach");
+        return -1;
+    }
+    return 0;
 }
