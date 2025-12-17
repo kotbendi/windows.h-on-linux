@@ -5,7 +5,7 @@ int main(){
     BYTE Color = 0xff; // Create a BYTE variable
     HANDLE hprocess; //Create a process handle variable
 
-    MessageBoxA("test", "Hello, World!"); // display a message box
+    MessageBox("test", "Hello, World!"); // display a message box
     
     hprocess = OpenProcess(1234); // open a process with pid 1234
     
