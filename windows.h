@@ -51,7 +51,7 @@ HANDLE OpenProcess(pid_t pid) {
 
     return handle;
 }
-int MessageBoxA(const char* title, const char* message) {
+int MessageBox(const char* title, const char* message) {
     int screen;
     Display* display = XOpenDisplay(NULL);
     
