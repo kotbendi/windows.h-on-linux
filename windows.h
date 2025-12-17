@@ -72,7 +72,7 @@ int MessageBoxA(const char* title, const char* message) {
         XNextEvent(display, &event);
 
         if (event.type == Expose) {  
-            // Рисуем текст
+            
             XDrawString(display, window,
                         DefaultGC(display, screen),
                         10, 20,
