@@ -22,4 +22,8 @@
 
 12.WriteProcessMemory
 
+13.CreateFile
+
+14.ReadFile
+
 SoonMore...
