@@ -1,0 +1,12 @@
+#pragma once
+#include <string.h>
+#include <sys/ptrace.h>
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <stdint.h>
