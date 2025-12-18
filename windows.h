@@ -1,15 +1,6 @@
 #pragma once
+#include "lib.h"
 
-#include <sys/ptrace.h>
-#include <sys/mman.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <stdint.h>
 typedef void* LPVOID;
 typedef uint32_t DWORD;
 typedef unsigned char BYTE;
@@ -51,7 +42,7 @@ HANDLE OpenProcess(pid_t pid) {
 
     return handle;
 }
-int MessageBox(const char* title, const char* message) {
+int MessageBoxA(const char* title, const char* message) {
     int screen;
     Display* display = XOpenDisplay(NULL);
     
@@ -119,4 +110,43 @@ int CloseHandle(HANDLE hProcess){
         return -1;
     }
     return 0;
+}
+int CreateFile(const char* filename,const char* text){
+    FILE *file = fopen(filename, "wb");
+    if (!file) {
+        perror("fopen");
+        return -1;
+    }
+    fwrite(text, 1, strlen(text), file);
+    fclose(file);
+    return 0;
+}
+char* ReadFile(const char* filename){ 
+    FILE *file = fopen(filename, "rb");
+    if (!file) {
+        perror("fopen");
+        return nullptr;
+    }
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    char* buffer = new char[fileSize + 1];
+    if (!buffer) {
+        perror("new");
+        fclose(file);
+        return nullptr;
+    }
+
+    size_t bytesRead = fread(buffer, 1, fileSize, file);
+    if (bytesRead != fileSize) {
+        perror("fread");
+        delete[] buffer;
+        fclose(file);
+        return nullptr;
+    }
+    buffer[fileSize] = '\0'; 
+
+    fclose(file);
+    return buffer;
 }
