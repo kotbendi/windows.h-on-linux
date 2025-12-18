@@ -13,6 +13,10 @@ int main(){
 
     WriteProcessMemory(hprocess, (void*)0x7ffdf000 , &val, sizeof(val)); // write memory to the process
     
+    CreateFile("test.txt","Hello, World!"); //Create a file with some text
+    
+    printf(ReadFile("test.txt")); //Read and print the file content
+    
     CloseHandle(hprocess); // close the process handle
 
     //Watch all functions in AllFunctions.txt
