@@ -1,6 +1,8 @@
 #pragma once
 #include "lib.h"
 
+typedef unsigned int ULONG32, *PULONG32;
+typedef unsigned int DWORD32, *PDWORD32;
 typedef unsigned int        UINT32, *PUINT32;
 typedef unsigned __int64    UINT64, *PUINT64;
 typedef BOOL* PBOOL;
