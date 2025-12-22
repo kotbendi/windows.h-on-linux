@@ -1,6 +1,7 @@
 #pragma once
 #include "lib.h"
 
+typedef BOOL* PBOOL;
 typedef void* LPVOID;
 typedef uint32_t DWORD;
 typedef unsigned char BYTE;
